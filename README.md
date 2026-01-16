@@ -1,36 +1,169 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sales Dashboard – Frontend Assignment
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a frontend-only Sales Dashboard built using **Next.js (App Router)** and **Tailwind CSS**.
+The goal of the assignment is to demonstrate frontend structure, component modularity, UI behavior, and role-based access handling without relying on backend APIs.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+All data and authentication are mocked on the client side using context and local state.
+
+---
+
+## Features
+
+* Modern dashboard layout with sidebar navigation
+* Role-based access control (Admin vs Agent)
+* Admin-only Settings page with restricted access handling
+* Clean, responsive UI using Tailwind CSS
+* Modular and reusable component structure
+* Mock authentication using React Context
+* No backend dependency (as per assignment instructions)
+
+---
+
+## Tech Stack
+
+* **Next.js** (App Router, Client Components)
+* **React**
+* **Tailwind CSS**
+* **JavaScript (ES6+)**
+
+---
+
+## Project Structure
+
+```
+.
+├── app/
+│   ├── page.jsx              # Dashboard page
+│   ├── leads/page.jsx        # Leads page
+│   ├── calls/page.jsx        # Call Logs page
+│   ├── settings/page.jsx     # Settings (Admin-only)
+│   └── layout.jsx            # App layout
+│
+├── components/
+│   └── Sidebar.jsx           # Sidebar navigation
+│
+├── context/
+│   └── AuthContext.jsx       # Mock authentication & role handling
+│
+├── services/
+│   └── mockData.js           # Mocked data layer
+│
+├── utils/
+│   └── helpers.js            # Utility functions
+│
+├── tailwind.config.js
+├── postcss.config.js
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Role-Based Access Logic
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application supports two conceptual roles:
 
-## Learn More
+* **Admin**
+* **Agent**
 
-To learn more about Next.js, take a look at the following resources:
+Role handling is implemented using a global `AuthContext`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Admin
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* Can access the Settings page
+* Can view User Management, System Preferences, and Audit Logs sections
 
-## Deploy on Vercel
+### Agent
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Cannot access admin-only settings
+* Sees a clear “Access Restricted” message instead of hidden content
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This ensures UI-level access control without backend logic, as required by the assignment.
+
+---
+
+## Settings Page Behavior
+
+* If `user.role === "admin"`
+  → Admin settings content is rendered
+* If `user.role !== "admin"`
+  → Access restricted UI is shown
+
+No sensitive content is rendered for agents.
+
+---
+
+## Tailwind CSS Usage
+
+* Utility-first styling for fast iteration
+* Responsive spacing and layout
+* Consistent typography and color usage
+* Minimal custom CSS (Tailwind only)
+
+Tailwind is configured to scan all project files using:
+
+```js
+content: ["./**/*.{js,jsx}"]
+```
+
+---
+
+## Mock Authentication
+
+Authentication is simulated using React Context:
+
+* User object contains role information
+* Role can be switched for testing
+* No external auth provider is used
+
+This keeps the project aligned with the assignment requirement of **no backend APIs**.
+
+---
+
+## How to Run Locally
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Open in browser:
+
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## Assignment Notes
+
+* Backend APIs are intentionally not used
+* All data is mocked locally
+* Focus is on:
+
+  * Component structure
+  * UI behavior
+  * Code readability
+  * Maintainability
+
+---
+
+## Possible Improvements
+
+If this were a production application:
+
+* Add backend authentication and authorization
+* Protect routes at the middleware level
+* Persist user roles securely
+* Add form handling and validation
+* Improve accessibility (ARIA, keyboard navigation)
+
+---
